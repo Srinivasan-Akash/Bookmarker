@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Site Bookmarker</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body onload="fetchBookmarks()">
+    <div class="container">
+      <div class="hero">
+        <h2>Bookmarker</h2>
+        <form id="myForm">
+          <div class="form-group">
+            <input type="text" class="webName" id="siteName" placeholder="Website Name eg:- (google)">
+          </div>
+          <div class="form-group">
+            <input type="text" id="siteUrl" placeholder="Website URL eg:- (www.google.com)">
+          </div>
+          <div class="btns">
+            <button type="submit" class="btn">Add Bookmark</button>
+            <button type="submit" class="btn">Remove All</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bookmarks">
+        <div>
+          <div id="bookmarksResults"></div>
+        </div>
+      </div>
+    </div> <!-- /container -->
+    <script src="app.js"></script>
+  </body>
+</html>
