@@ -1,32 +1,31 @@
 // Listen for form submit
-document.getElementById('myForm').addEventListener('submit', saveBookmark);
+document.getElementById('add').addEventListener('click', saveBookmark);
+let bookmarks = [];
 
 // Save Bookmark
 function saveBookmark(e) {
     // Get form values
-    var siteName = document.getElementById('siteName').value;
-    var siteUrl = document.getElementById('siteUrl').value;
+    let siteName = document.getElementById('siteName').value;
+    let siteUrl = document.getElementById('siteUrl').value;
 
     if (!validateForm(siteName, siteUrl)) {
         return false;
     }
 
-    var bookmark = {
+    let bookmark = {
         name: siteName,
         url: siteUrl
     }
 
     // Test if bookmarks is null
     if (localStorage.getItem('bookmarks') === null) {
-        // Init array
-        var bookmarks = [];
         // Add to array
         bookmarks.push(bookmark);
         // Set to localStorage
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     } else {
         // Get bookmarks from localStorage
-        var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
         // Add bookmark to array
         bookmarks.push(bookmark);
         // Re-set back to localStorage
@@ -46,9 +45,9 @@ function saveBookmark(e) {
 // Delete bookmark
 function deleteBookmark(url) {
     // Get bookmarks from localStorage
-    var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
     // Loop through the bookmarks
-    for (var i = 0; i < bookmarks.length; i++) {
+    for (let i = 0; i < bookmarks.length; i++) {
         if (bookmarks[i].url == url) {
             // Remove from array
             bookmarks.splice(i, 1);
@@ -64,15 +63,15 @@ function deleteBookmark(url) {
 // Fetch bookmarks
 function fetchBookmarks() {
     // Get bookmarks from localStorage
-    var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
     // Get output id
-    var bookmarksResults = document.getElementById('bookmarksResults');
+    let bookmarksResults = document.getElementById('bookmarksResults');
 
     // Build output
     bookmarksResults.innerHTML = '';
-    for (var i = 0; i < bookmarks.length; i++) {
-        var name = bookmarks[i].name;
-        var url = bookmarks[i].url;
+    for (let i = 0; i < bookmarks.length; i++) {
+        let name = bookmarks[i].name;
+        let url = bookmarks[i].url;
             bookmarksResults.innerHTML += '<div class="well">' +
             '<h3>' + name + '</h3>' +
             '<div>' +
@@ -83,6 +82,13 @@ function fetchBookmarks() {
     }
 }
 
+// Remove All
+document.querySelector(".removeAll").addEventListener("click", () => {
+    bookmarks = [];
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmarks()
+})
+
 // Validate Form
 function validateForm(siteName, siteUrl) {
     if (!siteName || !siteUrl) {
@@ -90,8 +96,8 @@ function validateForm(siteName, siteUrl) {
         return false;
     }
 
-    var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-    var regex = new RegExp(expression);
+    let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    let regex = new RegExp(expression);
 
     if (!siteUrl.match(regex)) {
         alert('Please use a valid URL');
